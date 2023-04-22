@@ -1,7 +1,7 @@
 version: '3'
 services:
   db:
-      container_name: maria-db
+      container_name: maria-db_reminder
       image: mariadb:latest
       volumes:
         - /Users/chayfadida/Projects/project_data/calander:/var/lib/mysql
@@ -13,12 +13,12 @@ services:
         MYSQL_DATABASE: ${DB_NAME}
         
   trekomania-web-app:
-    container_name: django-app
-    build: .
+    container_name: django-app_reminder
+    build: ./CalanderReminder
     command:
-        sh -c "sleep 10 && python manage.py makemigrations webBot &&
+        sh -c "sleep 10 && python manage.py makemigrations &&
                python manage.py migrate &&
-               gunicorn --bind 0.0.0.0:8000 Trekomania.wsgi:application"
+               gunicorn --bind 0.0.0.0:8000 CalanderReminder.wsgi:application"
     ports:
       - "8000:8000"
     depends_on: 
